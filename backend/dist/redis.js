@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const redis_1 = require("redis");
 const redis = (0, redis_1.createClient)();
 redis.on('error', console.error);
-redis.on('connect', () => console.log('Redis is online'));
+redis.on('connect', () => console.log('Redis online'));
 (() => __awaiter(void 0, void 0, void 0, function* () {
     yield redis.connect();
 }))();

@@ -4,8 +4,21 @@ import redis from "../redis";
 const router = Router();
 
 router.get("/", async (req, res) => {
-    await redis.lPush("messages", "ssup nigga");
-    res.json({msg: "ssup nigga"})
+  res.json({ msg: "get all todos route" });
 });
 
-export default router
+router.post("/", async (req, res) => {
+  const { todo } = req.body;
+
+  if (!todo) res.json({ success: false, data: "Missing todo" });
+
+  try {
+    await redis.lPush("todos", JSON.stringify(todo));
+    res.json({ success: true, data: todo });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, data: error });
+  }
+});
+
+export default router;

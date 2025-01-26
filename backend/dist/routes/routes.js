@@ -16,7 +16,19 @@ const express_1 = require("express");
 const redis_1 = __importDefault(require("../redis"));
 const router = (0, express_1.Router)();
 router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    yield redis_1.default.lPush("messages", "ssup nigga");
-    res.json({ msg: "ssup nigga" });
+    res.json({ msg: "get all todos route" });
+}));
+router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { todo } = req.body;
+    if (!todo)
+        res.json({ success: false, data: "Missing todo" });
+    try {
+        yield redis_1.default.lPush("todos", JSON.stringify(todo));
+        res.json({ success: true, data: todo });
+    }
+    catch (error) {
+        console.log(error);
+        res.json({ success: false, data: error });
+    }
 }));
 exports.default = router;
